@@ -1,0 +1,24 @@
+
+package(default_visibility = ["//visibility:public"]) 
+
+# For Bazel 9/Bzlmod add explicit loads. Under Bazel 8 WORKSPACE this may autoload.
+# load("@rules_java//java:java_library.bzl", "java_library")
+# load("@rules_java//java:java_test.bzl", "java_test")
+
+java_library(
+    name = "app",
+    srcs = ["src/main/java/com/example/App.java"],
+    deps = ["@maven//:org_seleniumhq_selenium_selenium_java"],
+)
+
+java_test(
+    name = "app_testng",
+    srcs = ["src/test/java/com/example/AppTest.java"],
+    deps = [
+        "@maven//:org_testng_testng",
+        "@maven//:org_seleniumhq_selenium_selenium_java",
+    ],
+    use_testrunner = False,
+    main_class = "org.testng.TestNG",
+    args = ["-testclass", "com.example.AppTest"],
+)
